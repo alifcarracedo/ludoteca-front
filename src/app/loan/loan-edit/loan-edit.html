@@ -1,0 +1,60 @@
+<div class="container">
+    @if (id()) {
+        <h1>Modificar préstamo</h1>
+    } @else {
+        <h1>Crear préstamo</h1>
+    }
+
+    <form>
+        <mat-form-field>
+            <mat-label>Identificador</mat-label>
+            <input type="text" matInput placeholder="Identificador" [(ngModel)]="id" name="id" disabled>
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Nombre del juego</mat-label>
+            <mat-select disableRipple [(ngModel)]="gameId" name="game" required>
+                @for (gam of games(); track gam.id) {
+                    <mat-option [value]="gam.id">{{gam.title}}</mat-option>
+                }
+            </mat-select>
+            <mat-error>El nombre del juego no puede estar vacío</mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Nombre del cliente</mat-label>
+            <mat-select disableRipple [(ngModel)]="clientId" name="client" required>
+                @for (cli of clients(); track cli.id) {
+                    <mat-option [value]="cli.id">{{cli.name}}</mat-option>
+                }
+            </mat-select>
+            <mat-error>El nombre del cliente no puede estar vacío</mat-error>
+        </mat-form-field>
+
+                <mat-form-field>
+            <mat-label>Fecha de préstamo</mat-label>
+            <input matInput [matDatepicker]="startPicker" [(ngModel)]="startDate" name="startDate" required>
+            <mat-datepicker-toggle [for]="startPicker"></mat-datepicker-toggle>
+            <mat-datepicker #startPicker></mat-datepicker>
+            <mat-error>La fecha no puede estar vacía</mat-error>
+        </mat-form-field>
+
+                <mat-form-field>
+            <mat-label>Fecha de devolución</mat-label>
+            <input matInput [matDatepicker]="endPicker" [(ngModel)]="endDate" name="endDate" required>
+            <mat-datepicker-toggle [for]="endPicker"></mat-datepicker-toggle>
+            <mat-datepicker #endPicker></mat-datepicker>
+            <mat-error>La fecha no puede estar vacía</mat-error>
+        </mat-form-field>
+
+        @if (errorMessage()){
+            <p class="error-message">{{ errorMessage()}}</p>
+            }
+            
+    </form>
+
+    <div class="buttons">
+        <button mat-stroked-button (click)="onClose()">Cerrar</button>
+        <button mat-flat-button color="primary" (click)="onSave()">Guardar</button>
+    </div>
+</div>
